@@ -1,11 +1,25 @@
-server:
-  port: 8761
-
 spring:
   application:
-    name: eureka-service
-
+    name: eureka-server
+  boot:
+    admin:
+      context-path: /admin
+server:
+  port: 8761
 eureka:
+  instance:
+    hostname: eurekaserver
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    waitTimeInMsWhenSyncEmpty: 5
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
